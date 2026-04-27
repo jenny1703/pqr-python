@@ -4,9 +4,9 @@ from datetime import datetime
 from datetime import datetime
 import pytz
 
-SUBDOMAIN = "premiseice"
-EMAIL = "diego.pedraza@native.io"
-API_TOKEN = "YHbiwuyF1Y8XOrdYGzWkHxA9bGJlLguvbrkjN2DM"
+SUBDOMAIN = "xxxxxx"
+EMAIL = "xxxxxx@xxxxx.com"
+API_TOKEN = "xxxxxx"
 
 BASE_URL = f"https://{SUBDOMAIN}.zendesk.com/api/v2"
 
