@@ -7,9 +7,9 @@ from datetime import datetime
 mensaje = """
 Pdv : 1210617655
 ME DE MEDICION: Abril 
-NOMBRE: RICHAR IVAN CORPAS
-CORREO:  Ivan.29.05.18@gmail.com
-NUMERO: 3152768230
+NOMBRE: RICHAR
+CORREO:  xxxxxqxxxx.com
+NUMERO: xxxxxx
 
 Validar el tema de portafolio se evidencia está al 100%
 
