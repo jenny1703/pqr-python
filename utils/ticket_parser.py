@@ -36,16 +36,15 @@ def extraer_pdvs_desde_ticket(mensaje: str):
         linea = lineas[i]
         linea_lower = linea.lower()
 
-        # =========================
-        # 🔹 DETECTAR CÓDIGO
-        # =========================
+        #DETECTA EL CÓDIGO
+    
         match_codigo = re.search(r"(?:cod\s*)?(\b12\d{8}\b)", linea_lower)
 
         if match_codigo:
 
             codigo_detectado = match_codigo.group(1)
 
-            # evitar teléfonos
+            #evitar teléfonos
             if any(x in linea_lower for x in [
                 "número de contacto",
                 "numero de contacto",
@@ -61,7 +60,7 @@ def extraer_pdvs_desde_ticket(mensaje: str):
             if codigo_actual not in pdvs:
                 pdvs[codigo_actual] = {"descripcion": []}
 
-            # capturar texto en la misma línea
+            #capturar texto en la misma línea
             texto_restante = re.sub(r"(?:cod\s*)?\b12\d{8}\b", "", linea_lower).strip()
 
             if texto_restante and len(texto_restante) > 20:
@@ -71,9 +70,9 @@ def extraer_pdvs_desde_ticket(mensaje: str):
             i += 1
             continue
 
-        # =========================
-        # 🔹 BLOQUE PDV
-        # =========================
+        
+        #BLOQUE PDV
+        
         if linea == "PDV":
             dentro_pdv = True
             codigo_actual = None
@@ -91,9 +90,9 @@ def extraer_pdvs_desde_ticket(mensaje: str):
             i += 1
             continue
 
-        # =========================
-        # 🔹 INDICADORES
-        # =========================
+       
+        #INDICADORES
+        
         if "el cliente en el indicador" in linea_lower:
 
             if codigo_actual:
@@ -103,9 +102,9 @@ def extraer_pdvs_desde_ticket(mensaje: str):
             i += 1
             continue
 
-        # =========================
-        # 🔹 PDV: + TEXTO LIBRE
-        # =========================
+        
+        # PDV: + TEXTO LIBRE
+        
         if "pdv:" in linea_lower:
 
             match = re.search(r"\b12\d{8}\b", linea)
@@ -151,9 +150,9 @@ def extraer_pdvs_desde_ticket(mensaje: str):
             i += 1
             continue
 
-        # =========================
-        # 🔹 RECLAMACIÓN
-        # =========================
+        
+        #RECLAMACIÓN
+    
         if "reclamación" in linea_lower:
 
             j = i + 1
@@ -182,9 +181,9 @@ def extraer_pdvs_desde_ticket(mensaje: str):
             i += 1
             continue
 
-        # =========================
-        # 🔹 TEXTO LIBRE GENERAL
-        # =========================
+        
+        #TEXTO LIBRE GENERAL
+        
         if codigo_actual:
 
             if es_ruido(linea):

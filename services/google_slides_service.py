@@ -6,9 +6,8 @@ TEMPLATE_ID = "1yaAawlZfRyAhQcKUTtioucWoUqlXqz13KkNxnYLmg-0"
 FOLDER_ID = "16NEQN4eeoFPPVN80QmfnV3JkyKeYlUmA"
 
 
-# =========================================================
-# 🔹 CREAR PRESENTACIÓN DESDE TEMPLATE
-# =========================================================
+#CREAR PRESENTACIÓN DESDE TEMPLATE
+
 def create_presentation_from_template(title: str) -> str:
     creds = get_credentials()
     drive_service = build("drive", "v3", credentials=creds)
@@ -20,7 +19,7 @@ def create_presentation_from_template(title: str) -> str:
 
     presentation_id = copied_file["id"]
 
-    # mover a carpeta
+    #mover a carpeta
     drive_service.files().update(
         fileId=presentation_id,
         addParents=FOLDER_ID,
@@ -31,9 +30,9 @@ def create_presentation_from_template(title: str) -> str:
     return presentation_id
 
 
-# =========================================================
-# 🔹 REEMPLAZAR TEXTO EN UN SLIDE ESPECÍFICO
-# =========================================================
+
+#REEMPLAZAR TEXTO EN UN SLIDE ESPECÍFICO
+
 def replace_text(presentation_id: str, data: dict, slide_id: str = None):
 
     creds = get_credentials()
@@ -53,7 +52,7 @@ def replace_text(presentation_id: str, data: dict, slide_id: str = None):
             }
         }
 
-        # 🔴 IMPORTANTE: limitar al slide
+        #limitar al slide
         if slide_id:
             replace_request["replaceAllText"]["pageObjectIds"] = [slide_id]
 
@@ -65,9 +64,8 @@ def replace_text(presentation_id: str, data: dict, slide_id: str = None):
     ).execute()
 
 
-# =========================================================
-# 🔹 DUPLICAR SLIDE BASE (UNO NUEVO POR PDV)
-# =========================================================
+#DUPLICAR SLIDE BASE (UNO NUEVO POR PDV)
+
 def agregar_o_actualizar_slide(
     presentation_id: str,
     slide_base_id: str,
@@ -83,7 +81,7 @@ def agregar_o_actualizar_slide(
 
     codigo_limpio = codigo_cliente.strip()
 
-    # 🔴 ID ÚNICO (CLAVE DEL ARREGLO)
+    #ID ÚNICO
     new_slide_id = f"slide_{codigo_limpio}_{uuid.uuid4().hex[:6]}"
 
     slides_service.presentations().batchUpdate(
@@ -105,9 +103,9 @@ def agregar_o_actualizar_slide(
     return new_slide_id
 
 
-# =========================================================
-# 🔹 ELIMINAR SLIDE BASE (MUY IMPORTANTE)
-# =========================================================
+
+#ELIMINAR SLIDE BASE
+
 def eliminar_slide(presentation_id: str, slide_id: str):
 
     creds = get_credentials()

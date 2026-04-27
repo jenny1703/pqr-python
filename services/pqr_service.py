@@ -23,7 +23,7 @@ def obtener_slide_base(presentation_id):
     return presentation["slides"][0]["objectId"]
 
 
-# 🔴 NUEVO: ordenar slides correctamente
+#Ordenar slides correctamente
 def ordenar_slides(presentation_id, slide_ids):
 
     creds = get_credentials()
@@ -55,9 +55,9 @@ def generar_presentacion_desde_parser(
 
     fecha_actual = datetime.now().strftime("%d/%m")
 
-    # =========================
-    # 🔴 CASO SIN PDV
-    # =========================
+    
+    #CASO SIN PDV
+    
     if not parsed_data["pdvs"]:
 
         presentation_id = create_presentation_from_template(titulo)
@@ -92,9 +92,9 @@ def generar_presentacion_desde_parser(
         eliminar_slide(presentation_id, slide_base_id)
         return presentation_id
 
-    # =========================
-    # 🔹 FLUJO NORMAL
-    # =========================
+
+    #FLUJO NORMAL
+    
 
     presentation_id = create_presentation_from_template(titulo)
     slide_base_id = obtener_slide_base(presentation_id)
@@ -110,13 +110,13 @@ def generar_presentacion_desde_parser(
 
         contador += 1
 
-        # 🔴 Ticket dinámico
+        #Ticket dinámico
         if contador == 1:
             ticket_label = str(ticket_id)
         else:
             ticket_label = f"{ticket_id}.{contador-1}"
 
-        # 🔴 Fecha y hora por PDV
+        #Fecha y hora por PDV
         fecha_pdv = ""
         hora_pdv = ""
 
@@ -130,7 +130,7 @@ def generar_presentacion_desde_parser(
 
         datos_extra = obtener_datos_por_codigo(codigo) or {}
 
-        # 🔴 Crear slide
+        #Crear slide
         new_slide_id = agregar_o_actualizar_slide(
             presentation_id,
             slide_base_id,
@@ -140,7 +140,7 @@ def generar_presentacion_desde_parser(
 
         slides_creados.append(new_slide_id)
 
-        # 🔴 Reemplazo
+        #Reemplazar
         replace_text(
             presentation_id,
             {
@@ -160,10 +160,10 @@ def generar_presentacion_desde_parser(
             slide_id=new_slide_id
         )
 
-    # 🔴 ORDENAR SLIDES (SOLUCIÓN FINAL)
+    #ORDENAR SLIDES
     ordenar_slides(presentation_id, slides_creados)
 
-    # 🔴 ELIMINAR SLIDE BASE
+    #ELIMINAR SLIDE BASE
     eliminar_slide(presentation_id, slide_base_id)
 
     return presentation_id

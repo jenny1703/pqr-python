@@ -17,35 +17,35 @@ def home():
     return {"status": "API PQR funcionando"}
 
 
-# 🔴 IMPORTANTE: acepta GET y POST
+#acepta GET y POST
 @app.api_route("/procesar_ticket/{ticket_id}", methods=["GET", "POST"])
 def procesar_ticket(ticket_id: int):
 
     try:
-        # =========================
-        # 1. TRAER MENSAJES ZENDESK
-        # =========================
+        
+        #TRAER MENSAJES ZENDESK
+        
         mensajes = construir_texto_ticket(ticket_id)
 
         if not mensajes:
             return {"error": "No hay mensajes en el ticket"}
 
-        # =========================
-        # 2. UNIR TEXTO
-        # =========================
+       
+        #UNIR TEXTO
+    
         texto = unir_textos(mensajes)
 
-        # =========================
-        # 3. PARSER
-        # =========================
+        
+        #PARSER
+        
         parsed = extraer_pdvs_desde_ticket(texto)
 
         if not parsed["pdvs"]:
             return {"error": "No se encontraron PDVs"}
 
-        # =========================
-        # 4. FECHAS POR PDV
-        # =========================
+    
+        #FECHAS POR PDV
+    
         fechas_raw = mapear_fechas_pdv(parsed, mensajes)
 
         fechas_por_pdv = {}
@@ -56,9 +56,9 @@ def procesar_ticket(ticket_id: int):
             fechas_por_pdv[codigo] = fecha
             horas_por_pdv[codigo] = hora
 
-        # =========================
-        # 5. GENERAR PRESENTACIÓN
-        # =========================
+        
+        #GENERAR PRESENTACIÓN
+        
         presentation_id = generar_presentacion_desde_parser(
             parsed,
             titulo=f"PQR_{ticket_id}",

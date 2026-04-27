@@ -20,12 +20,12 @@ def obtener_datos_por_codigo(codigo_cliente: str, fecha_pqr: str = ""):
     if not values:
         return None
 
-    # 🔹 Normalizar encabezados (minúsculas y sin espacios extra)
+    #Normalizar encabezados
     headers = [h.strip().lower() for h in values[0]]
 
     for row in values[1:]:
 
-        # 🔹 Asegurar que la fila tenga todas las columnas
+        #segurar que la fila tenga todas las columnas
         row_dict = dict(zip(headers, row + [""] * len(headers)))
 
         codigo_sheet = str(row_dict.get("cód cliente", "")).strip()
@@ -40,7 +40,7 @@ def obtener_datos_por_codigo(codigo_cliente: str, fecha_pqr: str = ""):
                 "CANAL": row_dict.get("tipocanal", ""),
                 "GEC": row_dict.get("gec1", ""),
 
-                # 🔴 FECHAS (OPCIÓN 1)
+                #FECHAS
                 "FECHA_INGRESO": fecha_pqr,
                 "FECHA_RESPUESTA": fecha_pqr
             }
